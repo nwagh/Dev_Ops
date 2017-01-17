@@ -1,0 +1,28 @@
+version: '2'
+services:
+  vlp:
+    image: vlproxy:latest
+    command: [-s,service]
+    environment:
+      - TZ="America/New_York"
+    expose:
+      - "18080"
+      - "5080"
+      - "5443"
+      - "5022"
+      - "10022"
+      - "10021"
+      - "20900-20999"
+    ports:
+      - "5080:5080"
+      - "5022:5022"
+      - "10022:10022"
+      - "10021:10021"
+      - "5443:5443"
+      - "20900-20999:20900-20999"
+    volumes:
+      - /dev/urandom:/dev/random
+    networks:
+      - backend  
+networks:
+  backend:

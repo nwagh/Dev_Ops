@@ -1,0 +1,77 @@
+version: '2'
+services:
+  hy1:
+    image: harmony:latest
+    command: [-s,service]
+    environment:
+      - TZ="America/New_York"
+    expose:
+      - "5080"
+      - "5443"
+      - "5022"
+      - "10022"
+      - "10021"
+      - "20900-20999"
+    ports:
+      - "5080:5080"
+      - "5022:5022"
+      - "10022:10022"
+      - "10021:10021"
+      - "5443:5443"
+      - "20900-20999:20900-20999"
+    volumes:
+      - /dev/urandom:/dev/random
+    networks:
+      - backend  
+  hy2:
+    image: harmony:latest
+    command: [-s,service]
+    environment:
+      - TZ="America/New_York"
+    expose:
+      - "5080"
+      - "5443"
+      - "5022"
+      - "10022"
+      - "10021"
+      - "20900-20999"
+    ports:
+      - "5180:5080"
+      - "5122:5022"
+      - "11022:10022"
+      - "11021:10021"
+      - "5543:5443"
+      - "21900-21999:20900-20999"
+    volumes:
+      - /dev/urandom:/dev/random
+    networks:
+      - backend  
+  mysql53:
+    image: mysql:latest
+    expose: 
+      - "3306"
+    environment:
+      - TZ="America/New_York"
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: harmony
+      MYSQL_ROOT_PASSWORD: cleo
+    networks:
+      - backend  
+  jreport:
+    image: jreport:latest
+    expose:
+      - "8888"
+      - "1129"
+    environment:
+      - TZ="America/New_York"
+    ports:
+      - "8888:8888"
+      - "1129:1129"
+    volumes:
+      - /dev/urandom:/dev/random
+    networks:
+      - backend  
+networks:
+  backend:
